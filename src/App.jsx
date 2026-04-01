@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // ==========================================
 // 텍스트 데이터 모음
 // ==========================================
+
 const SHORT_TEXTS = [
   "오늘도 당신의 하루가 반짝반짝 빛나길 바랍니다.",
   "노력은 결코 배신하지 않는다는 말을 믿어보세요.",
@@ -85,7 +86,10 @@ const SHORT_TEXTS = [
   "호랑이는 죽어서 가죽을 남기고 사람은 이름을 남깁니다.",
   "렉이 걸린 건지 제 머리가 딸리는건지, 코딩이 안 되네요",
   "대한민국은 민주공화국이며 모든 권력은 국민으로부터 나온다."
+  // 새로운 단문 추가 위치:
+  // "여기에 새로운 짧은 문장을 추가하세요.",
 ];
+
 const LONG_TEXTS = {
   "별 헤는 밤 (윤동주)": [
     "계절이 지나가는 하늘에는 가을로 가득 차 있습니다.",
@@ -135,10 +139,26 @@ const LONG_TEXTS = {
     "더불어 손잡고 새 희망을 노래하자",
     "우리의 배움터 광주소프트웨어마이스터고"
   ]
-const CODE_TEXTS = [
-  "Hello World!"
-]
+  // 새로운 긴 글 추가 위치:
+  // "새로운 제목": [
+  //   "첫 번째 문장입니다.",
+  //   "두 번째 문장입니다."
+  // ],
 };
+
+const CODE_TEXTS = [
+  "git remote add origin https://github.com/mmHg-9060/typing-practice.git",
+  "git remote -v",
+  "git add .",
+  "git commit -m \"Fix: App.jsx typo\"",
+  "git push origin main",
+  "git config --global core.autocrlf true",
+  "npm install",
+  "npm run dev"
+  // 새로운 코드/명령어 추가 위치:
+  // "추가할 명령어 입력",
+];
+
 
 // ==========================================
 // 배열에서 랜덤으로 N개를 뽑아주는 함수
@@ -219,14 +239,13 @@ export default function App() {
     }
   };
 
-  // 인라인 스타일 객체 (flexDirection: 'column' 추가 완료)
   const styles = {
     container: { 
       minHeight: '100vh', 
       backgroundColor: '#0f172a', 
       color: 'white', 
       display: 'flex', 
-      flexDirection: 'column', // <-- 카드가 가로로 퍼지는 현상 해결 
+      flexDirection: 'column', 
       alignItems: 'center', 
       justifyContent: 'center', 
       fontFamily: 'sans-serif', 
@@ -266,9 +285,17 @@ export default function App() {
             >
               1. 단문 연습 시작 (랜덤 10문장)
             </button>
+
+            {/* 새로운 모드(코드 연습) 버튼 추가 위치 */}
+            <button 
+              style={{ ...styles.button, backgroundColor: '#10b981' }} 
+              onClick={() => startGame(CODE_TEXTS)}
+            >
+              2. 터미널 명령어 연습 (Git & CLI)
+            </button>
             
             <div style={{ marginTop: '30px' }}>
-              <h3 style={{ color: '#94a3b8', marginBottom: '15px' }}>2. 긴 글 연습 선택</h3>
+              <h3 style={{ color: '#94a3b8', marginBottom: '15px' }}>3. 긴 글 연습 선택</h3>
               {Object.keys(LONG_TEXTS).map(title => (
                 <button 
                   key={title} 
@@ -278,6 +305,9 @@ export default function App() {
                   {title}
                 </button>
               ))}
+
+              {/* 추후 완전히 새로운 테마의 버튼을 그룹으로 추가하고 싶다면 이 아래에 작성하세요. */}
+              
             </div>
           </div>
         )}
@@ -312,7 +342,7 @@ export default function App() {
         {/* 결과 화면 */}
         {mode === 'result' && (
           <div style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: '2rem', color: '#fbbf24', marginBottom: '20px' }}>연습 완료! 🎉</h2>
+            <h2 style={{ fontSize: '2rem', color: '#fbbf24', marginBottom: '20px' }}>연습 완료!</h2>
             <div style={{ backgroundColor: '#0f172a', padding: '30px', borderRadius: '12px', marginBottom: '30px' }}>
               <p style={{ fontSize: '1.2rem', marginBottom: '15px' }}>총 타이핑 시간: {totalDuration.toFixed(2)}초</p>
               <p style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#4ade80' }}>평균 타수: {Math.round((totalStrokes / totalDuration) * 60)} CPM</p>
@@ -323,7 +353,6 @@ export default function App() {
 
       </div>
 
-      {/* 푸터(제작자 정보) 영역 - 카드 바깥, 아래쪽으로 잘 배치됨! */}
       <footer style={{ 
         marginTop: '40px', 
         paddingTop: '20px', 
